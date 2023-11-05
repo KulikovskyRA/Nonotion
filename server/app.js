@@ -10,10 +10,6 @@ const FileStore = require('session-file-store')(session);
 const authRouter = require('./src/routes/auth.router');
 
 const { PORT, CORS_URL, SECRET_KEY_SESSION } = process.env;
-const corsOptions = {
-  origin: [CORS_URL],
-  credentials: true,
-};
 
 const sessionConfig = {
   name: 'nonotion-cookie',
@@ -33,7 +29,7 @@ app.use(morgan('dev'));
 app.use(session(sessionConfig));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors({ credentials: true, origin: [CORS_URL] })); //!
 
 //! Routes
 

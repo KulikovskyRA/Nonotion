@@ -108,13 +108,14 @@ module.exports = authRouter
 
   // Проверка авторизованности по сессиям
   .get('/', async (req, res) => {
+    // res.sendStatus(403);
     try {
-      if (req.session.user) {
-        res.json({
-          user: req.session.user,
-        });
-      }
+      //! Отдаст данный из сесии или пустой объект
+      res.json({
+        user: req.session.user,
+      });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      res.status(400).json({ type: 'Что-то пошло не так' });
     }
   });
