@@ -9,8 +9,6 @@ import FormNewAccount from '../FormNewAccount/FormNewAccount';
 const { Header } = Layout;
 
 const Navbar = ({ userData }: IUserDataProps) => {
-  // console.log('userDataNavbar', userData);
-
   const logoutHandler = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
@@ -20,10 +18,9 @@ const Navbar = ({ userData }: IUserDataProps) => {
         }
       );
 
-      //? Возможно и так сработает удаление сессии
+      // ? Возможно и так сработает удаление сессии
       // if (response.ok) {
-      //   // window.location.href = '/';
-
+      //   window.location.href = '/';
       // }
     } catch (err) {
       console.log('Logout error:', err);
@@ -49,7 +46,6 @@ const Navbar = ({ userData }: IUserDataProps) => {
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
-            // backgroundColor: 'white',
           }}
         >
           <Menu
@@ -101,6 +97,7 @@ const Navbar = ({ userData }: IUserDataProps) => {
       </Layout>
 
       <Modal
+        style={{ maxWidth: 400 }}
         centered={true}
         footer={null}
         title={

@@ -10,3 +10,8 @@ export interface IUserDataProps {
 export interface IAccountModalHandlerProps {
   accountModalHandler: (state: boolean, type: string) => void;
 }
+
+export interface ILoginFormValues {
+  name: string;
+  password: string;
+}

@@ -12,12 +12,13 @@ function App(): JSX.Element {
   useEffect(() => {
     (async function (): Promise<void> {
       const response: Response = await fetch(
-        import.meta.env.VITE_URL + 'auth',
+        import.meta.env.VITE_URL + 'auth/',
         { credentials: 'include' }
       );
       if (response.ok) {
-        const userData = await response.json();
-        setUserData(userData);
+        const { user } = await response.json();
+        console.log(user);
+        setUserData(user);
       }
     })();
   }, []);
