@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { authReducer } from '../redux/authSlice';
 
 export const useCustomHook = () => {
   const dispatch = useDispatch();
-
-  const [result, setResult] = useState({});
 
   useEffect(() => {
     (async function (): Promise<void> {

@@ -3,11 +3,11 @@ import { Route, Routes } from 'react-router-dom';
 
 import MainPage from './components/MainPage/MainPage';
 import Navbar from './components/Navbar/Navbar';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
-import { authReducer } from './redux/authSlice';
+// import { authReducer } from './redux/authSlice';
 import { useCustomHook } from './hooks/useCustomHook';
 
 function App(): JSX.Element {
