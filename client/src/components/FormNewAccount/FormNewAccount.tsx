@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { authReducer } from '../../redux/authSlice';
 
 const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
+  console.log('---> FormNewAccount');
+
   const dispatch = useDispatch();
   async function onFinish(values: IRegisterFormValues) {
     try {

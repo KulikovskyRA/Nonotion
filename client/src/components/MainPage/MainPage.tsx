@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 const MainPage = () => {
   const [count, setCount] = useState(0);
+
+  console.log('---> MainPage');
   return (
     <>
       <div></div>

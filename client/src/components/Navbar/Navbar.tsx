@@ -21,6 +21,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const userData = useSelector((store: RootState) => store.authSlice);
 
+  console.log('---> Navbar');
+
   const logoutHandler = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
