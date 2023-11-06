@@ -15,8 +15,8 @@ export interface ILoginFormValues {
   name: string;
   password: string;
 }
-
-// export interface IAuthSlice {
-//   id: number;
-//   name: string;
-// }
+export interface IRegisterFormValues {
+  name: string;
+  password: string;
+  confirm: string;
+}

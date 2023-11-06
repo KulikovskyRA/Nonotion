@@ -22,7 +22,7 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
       if (response.ok) {
         accountModalHandler(false, 'login');
         const { user } = await response.json();
-        console.log(user);
+
         dispatch(authReducer(user));
       }
     } catch (err) {

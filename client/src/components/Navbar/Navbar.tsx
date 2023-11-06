@@ -9,7 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authReducer } from '../../redux/authSlice';
 import { RootState } from '../../redux/store';
 
+import type { MenuProps } from 'antd';
+import { Typography } from 'antd';
+
+const { Text } = Typography;
 const { Header } = Layout;
+
+import { capitalize } from 'lodash';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -43,6 +49,21 @@ const Navbar = () => {
     setAccountModal({ state, type });
   }
 
+  const items: MenuProps['items'] = [
+    {
+      label: (
+        <>
+          <Link to="/">Home</Link>
+        </>
+      ),
+      key: '1',
+    },
+    {
+      label: <Link to={`/users/${userData.id || 0}`}>Profile</Link>,
+      key: '2',
+    },
+  ];
+
   return (
     <>
       <Layout>
@@ -60,15 +81,8 @@ const Navbar = () => {
             defaultSelectedKeys={
               location.pathname.includes('users') ? ['2'] : ['1']
             }
-          >
-            <Menu.Item key="1">
-              <Link to="/">Home</Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Link to={`/users/${userData.id || 0}`}>Profile</Link>
-            </Menu.Item>
-          </Menu>
-
+            items={items}
+          />
           {!userData.id ? (
             <div>
               <Button
@@ -84,13 +98,16 @@ const Navbar = () => {
             </div>
           ) : (
             <div>
-              <Button
-                onClick={() => accountModalHandler(true, 'register')}
-                type="primary"
-                style={{ marginRight: '10px' }}
+              <Text
+                style={{
+                  color: 'white',
+                  paddingRight: '10px ',
+                }}
+                strong
+                italic
               >
-                Sign in
-              </Button>
+                {capitalize(userData.name)}
+              </Text>
               <Button
                 type="link"
                 onClick={logoutHandler}
@@ -117,7 +134,7 @@ const Navbar = () => {
         {accountModal.type === 'login' ? (
           <FormLogin accountModalHandler={accountModalHandler} />
         ) : (
-          <FormNewAccount />
+          <FormNewAccount accountModalHandler={accountModalHandler} />
         )}
       </Modal>
     </>
