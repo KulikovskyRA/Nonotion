@@ -1,14 +1,20 @@
 import { Layout, Menu, Button, Modal } from 'antd';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { IUserDataProps } from '../../types/types';
+
 import { PoweroffOutlined } from '@ant-design/icons';
 import FormLogin from '../FormLogin/FormLogin';
 import FormNewAccount from '../FormNewAccount/FormNewAccount';
+import { useDispatch, useSelector } from 'react-redux';
+import { authReducer } from '../../redux/authSlice';
+import { RootState } from '../../redux/store';
 
 const { Header } = Layout;
 
-const Navbar = ({ userData }: IUserDataProps) => {
+const Navbar = () => {
+  const dispatch = useDispatch();
+  const userData = useSelector((store: RootState) => store.authSlice);
+
   const logoutHandler = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
@@ -18,10 +24,9 @@ const Navbar = ({ userData }: IUserDataProps) => {
         }
       );
 
-      // ? Возможно и так сработает удаление сессии
-      // if (response.ok) {
-      //   window.location.href = '/';
-      // }
+      if (response.ok) {
+        dispatch(authReducer({ id: 0, name: '' }));
+      }
     } catch (err) {
       console.log('Logout error:', err);
     }

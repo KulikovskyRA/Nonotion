@@ -2,9 +2,11 @@ import { Button, Flex, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { IAccountModalHandlerProps, ILoginFormValues } from '../../types/types';
+import { useDispatch } from 'react-redux';
+import { authReducer } from '../../redux/authSlice';
 
 const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
-  //!
+  const dispatch = useDispatch();
 
   async function onFinish(values: ILoginFormValues) {
     try {
@@ -19,6 +21,9 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
       );
       if (response.ok) {
         accountModalHandler(false, 'login');
+        const { user } = await response.json();
+        console.log(user);
+        dispatch(authReducer(user));
       }
     } catch (err) {
       console.log('Logout error:', err);

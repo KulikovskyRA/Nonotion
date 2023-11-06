@@ -3,11 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 
 import MainPage from './components/MainPage/MainPage';
 import Navbar from './components/Navbar/Navbar';
-import { useEffect, useState } from 'react';
-import { IUserData } from './types/types';
+import { useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import { authReducer } from './redux/authSlice';
 
 function App(): JSX.Element {
-  const [userData, setUserData] = useState<IUserData>({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async function (): Promise<void> {
@@ -17,15 +20,16 @@ function App(): JSX.Element {
       );
       if (response.ok) {
         const { user } = await response.json();
-        console.log(user);
-        setUserData(user);
+
+        dispatch(authReducer(user));
       }
+      console.log('ЗАГРУЗКА');
     })();
   }, []);
 
   return (
     <>
-      <Navbar userData={userData} />
+      <Navbar />
 
       <Routes>
         <Route path="/" element={<MainPage />} />
