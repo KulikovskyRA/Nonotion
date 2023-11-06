@@ -7,6 +7,7 @@ import { authReducer } from '../../redux/authSlice';
 
 const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
   const dispatch = useDispatch();
+  console.log('---> FormLogin');
 
   async function onFinish(values: ILoginFormValues) {
     try {

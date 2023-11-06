@@ -91,10 +91,10 @@ const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
       <Flex justify="start" gap="large">
         <Form.Item>
           <Button
-            onClick={() => accountModalHandler(true, 'register')}
+            onClick={() => accountModalHandler(true, 'login')}
             type="link"
           >
-            Нет аккаунта?
+            Есть аккаунт?
           </Button>
         </Form.Item>
         <Form.Item>
