@@ -113,9 +113,12 @@ module.exports = authRouter
         res.json({
           user: req.session.user,
         });
+      } else {
+        res.json({
+          user: { id: 0, name: '' },
+        });
       }
     } catch (err) {
-      // console.log(err);
       res.status(400).json({ type: 'Что-то пошло не так' });
     }
   });

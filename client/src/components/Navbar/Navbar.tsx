@@ -16,12 +16,18 @@ const { Text } = Typography;
 const { Header } = Layout;
 
 import { capitalize } from 'lodash';
+import { authAPI } from '../../services/authService';
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const userData = useSelector((store: RootState) => store.authSlice);
 
+  const { data, error, isLoading } = authAPI.useCheckAuthQuery('');
+
+  // const userData = useSelector((store: RootState) => store.authSlice);
+
+  // const userData = data.user ?? { id: 0, name: '' };
   console.log('---> Navbar');
+  console.log(data);
 
   const logoutHandler = async (): Promise<void> => {
     try {
@@ -61,7 +67,7 @@ const Navbar = () => {
       key: '1',
     },
     {
-      label: <Link to={`/users/${userData.id || 0}`}>Profile</Link>,
+      label: <Link to={`/users/${data?.user.id || 0}`}>Profile</Link>,
       key: '2',
     },
   ];
@@ -85,7 +91,8 @@ const Navbar = () => {
             }
             items={items}
           />
-          {!userData.id ? (
+
+          {!data?.user?.id ? (
             <div>
               <Button
                 onClick={() => accountModalHandler(true, 'login')}
@@ -108,7 +115,7 @@ const Navbar = () => {
                 strong
                 italic
               >
-                {capitalize(userData.name)}
+                {capitalize(data.user.name)}
               </Text>
               <Button
                 type="link"

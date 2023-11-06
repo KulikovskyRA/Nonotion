@@ -8,10 +8,10 @@ import Navbar from './components/Navbar/Navbar';
 // import { useDispatch } from 'react-redux';
 
 // import { authReducer } from './redux/authSlice';
-import { useCustomHook } from './hooks/useCustomHook';
+// import { useCustomHook } from './hooks/useCustomHook';
 
 function App(): JSX.Element {
-  useCustomHook();
+  // useCustomHook();
   // const dispatch = useDispatch();
 
   // useEffect(() => {
