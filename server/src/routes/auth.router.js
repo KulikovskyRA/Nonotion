@@ -58,10 +58,12 @@ module.exports = authRouter
   .post(
     '/login',
     //! username
-    body('name').isString().notEmpty(),
+    // body('name').isString().notEmpty(),
     //! пароль дб больше 5 знаков
-    body('password').isString().isLength({ min: 5, max: 15 }),
+    // body('password').isString().isLength({ min: 5, max: 15 }),
     async (req, res) => {
+      console.log(req.body);
+
       //! Проверка на ошибки валидации
       const { errors } = validationResult(req);
       if (errors.length) {

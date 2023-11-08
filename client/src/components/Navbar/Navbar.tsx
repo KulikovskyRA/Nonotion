@@ -5,7 +5,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { PoweroffOutlined } from '@ant-design/icons';
 import FormLogin from '../FormLogin/FormLogin';
 import FormNewAccount from '../FormNewAccount/FormNewAccount';
-import { useDispatch } from 'react-redux';
 
 import type { MenuProps } from 'antd';
 import { Typography } from 'antd';
@@ -17,13 +16,19 @@ import { capitalize } from 'lodash';
 import { authAPI, useLogoutMutation } from '../../services/authService';
 
 const Navbar = () => {
-  const { data, error, isLoading } = authAPI.useCheckAuthQuery('');
+  const {
+    data,
+    // error, isLoading
+  } = authAPI.useCheckAuthQuery('');
 
   console.log('---> Navbar');
 
   //! мутации
 
-  const [logout, { isLoading: isUpdating }] = useLogoutMutation();
+  const [
+    logout,
+    // { isLoading: isUpdating }
+  ] = useLogoutMutation();
 
   const location = useLocation();
 
@@ -98,7 +103,6 @@ const Navbar = () => {
               </Text>
               <Button
                 type="link"
-                //! onClick={logoutHandler}
                 onClick={() => logout('')}
                 icon={<PoweroffOutlined />}
               />

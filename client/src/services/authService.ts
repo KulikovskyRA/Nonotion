@@ -21,7 +21,30 @@ export const authAPI = createApi({
       }),
       invalidatesTags: ['AuthTag'],
     }),
+
+    login: builder.mutation({
+      query: (values) => ({
+        url: `auth/login`,
+        method: 'POST',
+        body: values,
+      }),
+      invalidatesTags: ['AuthTag'],
+    }),
+
+    newAcc: builder.mutation({
+      query: (values) => ({
+        url: `auth/new`,
+        method: 'POST',
+        body: values,
+      }),
+      invalidatesTags: ['AuthTag'],
+    }),
   }),
 });
 
-export const { useCheckAuthQuery, useLogoutMutation } = authAPI;
+export const {
+  useCheckAuthQuery,
+  useLogoutMutation,
+  useLoginMutation,
+  useNewAccMutation,
+} = authAPI;

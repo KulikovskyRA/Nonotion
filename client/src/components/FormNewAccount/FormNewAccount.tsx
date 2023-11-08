@@ -1,109 +1,105 @@
-import { Button, Flex, Form, Input } from 'antd';
+import { Alert, Button, Flex, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import {
   IAccountModalHandlerProps,
   IRegisterFormValues,
 } from '../../types/types';
-import { useDispatch } from 'react-redux';
-import { authReducer } from '../../redux/authSlice';
+import { useNewAccMutation } from '../../services/authService';
+import { useState } from 'react';
 
 const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
   console.log('---> FormNewAccount');
 
-  const dispatch = useDispatch();
-  async function onFinish(values: IRegisterFormValues) {
-    try {
-      const response: Response = await fetch(
-        import.meta.env.VITE_URL + 'auth/new',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({
-            name: values.name,
-            password: values.password,
-          }),
-        }
-      );
-      if (response.ok) {
-        accountModalHandler(false, 'login');
-        const { user } = await response.json();
+  const [errorAlert, setErrorAlert] = useState({
+    status: false,
+    errorInfo: '',
+  });
+  const [newAcc] = useNewAccMutation();
 
-        dispatch(authReducer(user));
-      } else {
-        console.log(await response.json());
-      }
-    } catch (err) {
-      console.log('Logout error:', err);
-    }
+  async function onFinish(values: IRegisterFormValues) {
+    const result = await newAcc(values);
+    if (result.error) {
+      // console.log(result.error.data.type);
+      setErrorAlert({ status: true, errorInfo: result.error.data.type });
+    } else accountModalHandler(false, 'register');
   }
   return (
-    <Form
-      name="basic"
-      wrapperCol={{ span: 16 }}
-      style={{ width: 500, maxWidth: 520 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      autoComplete="off"
-    >
-      <Form.Item
-        name="name"
-        rules={[{ required: true, message: 'Введите свой псевдоним!' }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Логин"
+    <>
+      {errorAlert.status && (
+        <Alert
+          style={{ marginBottom: '20px' }}
+          message={errorAlert.errorInfo}
+          type="error"
+          showIcon
         />
-      </Form.Item>
-
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: 'Введите пароль!' }]}
+      )}
+      <Form
+        name="basic"
+        wrapperCol={{ span: 16 }}
+        style={{ width: 500, maxWidth: 520 }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        autoComplete="off"
       >
-        <Input.Password
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          placeholder="Пароль"
-        />
-      </Form.Item>
-
-      <Form.Item
-        name="confirm"
-        dependencies={['password']}
-        rules={[
-          { required: true, message: 'Повторите пароль!' },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error('Пароли не совпадают!'));
-            },
-          }),
-        ]}
-        hasFeedback
-      >
-        <Input.Password
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          placeholder="Повторите пароль"
-        />
-      </Form.Item>
-
-      <Flex justify="start" gap="large">
-        <Form.Item>
-          <Button
-            onClick={() => accountModalHandler(true, 'login')}
-            type="link"
-          >
-            Есть аккаунт?
-          </Button>
+        <Form.Item
+          name="name"
+          rules={[{ required: true, message: 'Введите свой псевдоним!' }]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Логин"
+          />
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Войти
-          </Button>
+
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: 'Введите пароль!' }]}
+        >
+          <Input.Password
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            placeholder="Пароль"
+          />
         </Form.Item>
-      </Flex>
-    </Form>
+
+        <Form.Item
+          name="confirm"
+          dependencies={['password']}
+          rules={[
+            { required: true, message: 'Повторите пароль!' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('Пароли не совпадают!'));
+              },
+            }),
+          ]}
+          hasFeedback
+        >
+          <Input.Password
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            placeholder="Повторите пароль"
+          />
+        </Form.Item>
+
+        <Flex justify="start" gap="large">
+          <Form.Item>
+            <Button
+              onClick={() => accountModalHandler(true, 'login')}
+              type="link"
+            >
+              Есть аккаунт?
+            </Button>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Войти
+            </Button>
+          </Form.Item>
+        </Flex>
+      </Form>
+    </>
   );
 };
 
