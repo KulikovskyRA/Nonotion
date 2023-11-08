@@ -6,11 +6,22 @@ export const authAPI = createApi({
     baseUrl: import.meta.env.VITE_URL,
     credentials: 'include',
   }),
+  tagTypes: ['AuthTag'],
+
   endpoints: (builder) => ({
     checkAuth: builder.query({
-      query: (name: string) => `auth/`,
+      query: () => `auth/`,
+      providesTags: ['AuthTag'],
+    }),
+
+    logout: builder.mutation({
+      query: () => ({
+        url: `auth/logout`,
+        method: 'GET',
+      }),
+      invalidatesTags: ['AuthTag'],
     }),
   }),
 });
 
-export const { useCheckAuthQuery } = authAPI;
+export const { useCheckAuthQuery, useLogoutMutation } = authAPI;

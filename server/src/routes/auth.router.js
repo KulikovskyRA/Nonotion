@@ -99,7 +99,8 @@ module.exports = authRouter
     try {
       req.session.destroy(() => {
         res.clearCookie('nonotion-cookie');
-        res.json({ status: 'ok' });
+        // res.json({ status: 'ok' });
+        res.status(200).json({ id: 0, name: '' });
       });
     } catch (error) {
       res.sendStatus(400);

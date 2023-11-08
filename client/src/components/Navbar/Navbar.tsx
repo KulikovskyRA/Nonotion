@@ -5,9 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { PoweroffOutlined } from '@ant-design/icons';
 import FormLogin from '../FormLogin/FormLogin';
 import FormNewAccount from '../FormNewAccount/FormNewAccount';
-import { useDispatch, useSelector } from 'react-redux';
-import { authReducer } from '../../redux/authSlice';
-import { RootState } from '../../redux/store';
+import { useDispatch } from 'react-redux';
 
 import type { MenuProps } from 'antd';
 import { Typography } from 'antd';
@@ -16,35 +14,16 @@ const { Text } = Typography;
 const { Header } = Layout;
 
 import { capitalize } from 'lodash';
-import { authAPI } from '../../services/authService';
+import { authAPI, useLogoutMutation } from '../../services/authService';
 
 const Navbar = () => {
-  const dispatch = useDispatch();
-
   const { data, error, isLoading } = authAPI.useCheckAuthQuery('');
 
-  // const userData = useSelector((store: RootState) => store.authSlice);
-
-  // const userData = data.user ?? { id: 0, name: '' };
   console.log('---> Navbar');
-  console.log(data);
 
-  const logoutHandler = async (): Promise<void> => {
-    try {
-      const response: Response = await fetch(
-        import.meta.env.VITE_URL + 'auth/logout',
-        {
-          credentials: 'include',
-        }
-      );
+  //! мутации
 
-      if (response.ok) {
-        dispatch(authReducer({ id: 0, name: '' }));
-      }
-    } catch (err) {
-      console.log('Logout error:', err);
-    }
-  };
+  const [logout, { isLoading: isUpdating }] = useLogoutMutation();
 
   const location = useLocation();
 
@@ -119,7 +98,8 @@ const Navbar = () => {
               </Text>
               <Button
                 type="link"
-                onClick={logoutHandler}
+                //! onClick={logoutHandler}
+                onClick={() => logout('')}
                 icon={<PoweroffOutlined />}
               />
             </div>
