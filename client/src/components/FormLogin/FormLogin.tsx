@@ -16,12 +16,14 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
 
   const [login] = useLoginMutation();
 
-  async function onFinish(values: ILoginFormValues) {
-    const result = await login(values);
-    if (result.error) {
-      // console.log(result.error.data.type);
-      setErrorAlert({ status: true, errorInfo: result.error.data.type });
-    } else accountModalHandler(false, 'login');
+  function onFinish(values: ILoginFormValues) {
+    setErrorAlert((prev) => ({ ...prev, status: false }));
+    login(values)
+      .unwrap()
+      .then(() => accountModalHandler(false, 'login'))
+      .catch((error) =>
+        setErrorAlert({ status: true, errorInfo: error?.data.type })
+      );
   }
 
   return (

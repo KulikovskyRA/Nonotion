@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 
-const MainPage = () => {
+const MainPage = memo(() => {
   const [count, setCount] = useState(0);
 
   console.log('---> MainPage');
@@ -21,6 +21,6 @@ const MainPage = () => {
       </p>
     </>
   );
-};
+});
 
 export default MainPage;

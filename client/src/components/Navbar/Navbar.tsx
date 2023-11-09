@@ -43,11 +43,7 @@ const Navbar = () => {
 
   const items: MenuProps['items'] = [
     {
-      label: (
-        <>
-          <Link to="/">Home</Link>
-        </>
-      ),
+      label: <Link to="/">Home</Link>,
       key: '1',
     },
     {

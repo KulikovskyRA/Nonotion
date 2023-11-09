@@ -16,12 +16,14 @@ const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
   });
   const [newAcc] = useNewAccMutation();
 
-  async function onFinish(values: IRegisterFormValues) {
-    const result = await newAcc(values);
-    if (result.error) {
-      // console.log(result.error.data.type);
-      setErrorAlert({ status: true, errorInfo: result.error.data.type });
-    } else accountModalHandler(false, 'register');
+  function onFinish(values: IRegisterFormValues) {
+    setErrorAlert((prev) => ({ ...prev, status: false }));
+    newAcc(values)
+      .unwrap()
+      .then(() => accountModalHandler(false, 'register'))
+      .catch((error) =>
+        setErrorAlert({ status: true, errorInfo: error?.data.type })
+      );
   }
   return (
     <>
