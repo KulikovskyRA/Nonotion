@@ -1,8 +1,9 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 
-import MainPage from './components/MainPage/MainPage';
+import HomePage from './components/HomePage/HomePage';
 import Navbar from './components/Navbar/Navbar';
+import ProfilePage from './components/ProfilePage/ProfilePage';
 
 function App(): JSX.Element {
   return (
@@ -10,11 +11,8 @@ function App(): JSX.Element {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route
-          path="/users/:id"
-          element={<div>Здесь будет страница профиля</div>}
-        />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/users/:id" element={<ProfilePage />} />
       </Routes>
     </>
   );

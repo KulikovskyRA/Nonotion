@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IQueryUserData } from '../types/types';
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
@@ -9,7 +10,7 @@ export const authAPI = createApi({
   tagTypes: ['AuthTag'],
 
   endpoints: (builder) => ({
-    checkAuth: builder.query({
+    checkAuth: builder.query<IQueryUserData, void>({
       query: () => `auth/`,
       providesTags: ['AuthTag'],
     }),

@@ -19,7 +19,7 @@ const Navbar = () => {
   const {
     data,
     // error, isLoading
-  } = authAPI.useCheckAuthQuery('');
+  } = authAPI.useCheckAuthQuery();
 
   console.log('---> Navbar');
 
@@ -117,7 +117,6 @@ const Navbar = () => {
             : 'Зарегистрироваться'
         }
         open={accountModal.state}
-        // onOk={handleOk}
         onCancel={() => accountModalHandler(false, 'login')}
       >
         {accountModal.type === 'login' ? (

@@ -96,7 +96,7 @@ const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Войти
+              Создать
             </Button>
           </Form.Item>
         </Flex>

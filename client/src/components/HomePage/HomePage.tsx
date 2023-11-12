@@ -1,9 +1,9 @@
 import { useState, memo } from 'react';
 
-const MainPage = memo(() => {
+const HomePage = memo(() => {
   const [count, setCount] = useState(0);
 
-  console.log('---> MainPage');
+  console.log('---> HomePage');
   return (
     <>
       <div></div>
@@ -23,4 +23,4 @@ const MainPage = memo(() => {
   );
 });
 
-export default MainPage;
+export default HomePage;

@@ -3,6 +3,10 @@ export interface IUserData {
   name: string;
 }
 
+export interface IQueryUserData {
+  user: IUserData;
+}
+
 export interface IUserDataProps {
   userData: IUserData;
 }
