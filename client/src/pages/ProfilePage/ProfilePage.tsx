@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { useParams } from 'react-router-dom';
 
 const ProfilePage = () => {
   const { id } = useParams();
-  console.log(id);
+
+  console.log('---> ProfilePage - рендеринг', id);
+
   return <div>ProfilePage</div>;
 };
 

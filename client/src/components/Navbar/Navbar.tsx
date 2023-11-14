@@ -21,7 +21,7 @@ const Navbar = () => {
     // error, isLoading
   } = authAPI.useCheckAuthQuery();
 
-  console.log('---> Navbar');
+  console.log('---> Navbar - рендеринг');
 
   //! мутации
 
