@@ -4,6 +4,7 @@ const FooterComp = () => {
   console.log('Footer - rendering');
   return (
     <Footer
+      data-testid="Footer"
       style={{
         backgroundColor: '#001529',
         textAlign: 'center',

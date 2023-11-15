@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Проверка компонента FooterComp Снапшот тестирование 1`] = `
+<footer
+  className="ant-layout-footer css-dev-only-do-not-override-qgg3xn"
+  data-testid="Footer"
+  style={
+    {
+      "backgroundColor": "#001529",
+      "color": "white",
+      "padding": 10,
+      "textAlign": "center",
+    }
+  }
+>
+  Nonotion ©2023 Created by Kulikovsky
+</footer>
+`;

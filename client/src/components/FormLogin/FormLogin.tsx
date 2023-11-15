@@ -22,7 +22,7 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
       .unwrap()
       .then(() => accountModalHandler(false, 'login'))
       .catch((error) =>
-        setErrorAlert({ status: true, errorInfo: error?.data.type })
+        setErrorAlert({ status: true, errorInfo: error?.data?.type })
       );
   }
 
@@ -34,9 +34,11 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
           message={errorAlert.errorInfo}
           type="error"
           showIcon
+          data-testid="alert"
         />
       )}
       <Form
+        data-testid="Form"
         name="basic"
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -47,6 +49,7 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
           rules={[{ required: true, message: 'Введите свой псевдоним!' }]}
         >
           <Input
+            data-testid="Login"
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Логин"
           />
@@ -57,6 +60,7 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
           rules={[{ required: true, message: 'Введите пароль!' }]}
         >
           <Input.Password
+            data-testid="Password"
             prefix={<LockOutlined className="site-form-item-icon" />}
             placeholder="Пароль"
           />
