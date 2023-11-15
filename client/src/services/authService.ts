@@ -4,7 +4,7 @@ import { IQueryUserData } from '../types/types';
 export const authAPI = createApi({
   reducerPath: 'authAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL,
+    baseUrl: process.env.VITE_URL,
     credentials: 'include',
   }),
   tagTypes: ['AuthTag'],

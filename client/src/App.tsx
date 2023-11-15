@@ -1,13 +1,14 @@
 import './App.scss';
-import { Route, Routes } from 'react-router-dom';
 
 import HomePage from './pages/HomePage/HomePage';
-import Navbar from './components/Navbar/Navbar';
+
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 
+import Navbar from './components/Navbar/Navbar';
 import FooterComp from './components/FooterComp/FooterComp';
 import { Layout } from 'antd';
-import { Content } from 'antd/es/layout/layout';
+import { Content } from 'antd/lib/layout/layout';
+import { Route, Routes } from 'react-router-dom';
 
 function App(): JSX.Element {
   return (
