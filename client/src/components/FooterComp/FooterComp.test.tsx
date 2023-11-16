@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import FooterComp from './FooterComp';
 
@@ -11,7 +11,8 @@ describe('Проверка компонента FooterComp', () => {
 
   test('Не крашится', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<FooterComp />, div);
+    const root = createRoot(div);
+    root.render(<FooterComp />);
   });
 
   test('Отрисовывает текст в футере', () => {

@@ -1,24 +1,14 @@
-import ReactDOM from 'react-dom';
-
 import FormLogin from './FormLogin';
 
-import {
-  render,
-  screen,
-  cleanup,
-  fireEvent,
-  // act,
-} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store.tsx';
 import { BrowserRouter } from 'react-router-dom';
 
 import renderer from 'react-test-renderer';
-
-function accountModalHandler(state: boolean, type: string) {
-  return { state, type };
-}
+import { createRoot } from 'react-dom/client';
 
 describe('Проверка компонента FormLogin', () => {
   beforeAll(() => {
@@ -40,18 +30,20 @@ describe('Проверка компонента FormLogin', () => {
   afterEach(cleanup);
 
   test('Не крашится', () => {
+    const accountModalHandler = jest.fn();
     const div = document.createElement('div');
-    ReactDOM.render(
+    const root = createRoot(div);
+    root.render(
       <Provider store={store}>
         <BrowserRouter>
           <FormLogin accountModalHandler={accountModalHandler} />
         </BrowserRouter>
-      </Provider>,
-      div
+      </Provider>
     );
   });
 
   test('Проверка наличия формы', () => {
+    const accountModalHandler = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -64,6 +56,7 @@ describe('Проверка компонента FormLogin', () => {
   });
 
   test('Проверка наличия инпутов логина, пароля', () => {
+    const accountModalHandler = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -79,6 +72,7 @@ describe('Проверка компонента FormLogin', () => {
   });
 
   test('Проверка наличия кнопок', () => {
+    const accountModalHandler = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -92,6 +86,7 @@ describe('Проверка компонента FormLogin', () => {
   });
 
   test('Alert должен быть невидимым', () => {
+    const accountModalHandler = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -105,8 +100,7 @@ describe('Проверка компонента FormLogin', () => {
   });
 
   test('Alert становится видимым по ошибке', async () => {
-    // const mockSubmit = jest.fn();
-
+    const accountModalHandler = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -133,7 +127,45 @@ describe('Проверка компонента FormLogin', () => {
     expect(alert).toBeInTheDocument();
   });
 
+  test('Введите свой псевдоним! Введите пароль! ', async () => {
+    const accountModalHandler = jest.fn();
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+        </BrowserRouter>
+      </Provider>
+    );
+
+    const submitButton = screen.getByText('Войти');
+    await fireEvent.submit(submitButton);
+    const alertLogin = await screen.findByText('Введите свой псевдоним!');
+    const alertPassword = await screen.findByText('Введите пароль!');
+    expect(alertLogin).toBeInTheDocument();
+    expect(alertPassword).toBeInTheDocument();
+  });
+
+  test('Вызывается ли функция accountModalHandler при нажатии на кнопку ~Нет аккаунта?~', async () => {
+    const accountModalHandler = jest.fn();
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+        </BrowserRouter>
+      </Provider>
+    );
+
+    const user = userEvent.setup();
+    const linkButton = screen.getByText('Нет аккаунта?');
+    expect(linkButton).toBeInTheDocument();
+
+    await user.click(linkButton);
+
+    expect(accountModalHandler).toBeCalledTimes(1);
+  });
+
   test('Снапшот тестирование', () => {
+    const accountModalHandler = jest.fn();
     const tree = renderer
       .create(
         <Provider store={store}>

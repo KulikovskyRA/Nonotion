@@ -15,6 +15,5 @@ describe('Проверка основы App', () => {
         </BrowserRouter>
       </Provider>;
     });
-    expect(true).toBeTruthy();
   });
 });
