@@ -22,7 +22,7 @@ const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
       .unwrap()
       .then(() => accountModalHandler(false, 'register'))
       .catch((error) =>
-        setErrorAlert({ status: true, errorInfo: error?.data.type })
+        setErrorAlert({ status: true, errorInfo: error?.data?.type })
       );
   }
   return (
@@ -33,9 +33,11 @@ const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
           message={errorAlert.errorInfo}
           type="error"
           showIcon
+          data-testid="alert"
         />
       )}
       <Form
+        data-testid="Form"
         name="basic"
         wrapperCol={{ span: 16 }}
         style={{ width: 500, maxWidth: 520 }}

@@ -1,5 +1,3 @@
-import FormLogin from './FormLogin';
-
 import userEvent from '@testing-library/user-event';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -9,8 +7,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 import renderer from 'react-test-renderer';
 import { createRoot } from 'react-dom/client';
+import FormNewAccount from './FormNewAccount.tsx';
 
-describe('Проверка компонента FormLogin', () => {
+describe('Проверка компонента FormNewAccount', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
@@ -36,7 +35,7 @@ describe('Проверка компонента FormLogin', () => {
     root.render(
       <Provider store={store}>
         <BrowserRouter>
-          <FormLogin accountModalHandler={accountModalHandler} />
+          <FormNewAccount accountModalHandler={accountModalHandler} />
         </BrowserRouter>
       </Provider>
     );
@@ -47,7 +46,9 @@ describe('Проверка компонента FormLogin', () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+          <FormNewAccount
+            accountModalHandler={accountModalHandler}
+          ></FormNewAccount>
         </BrowserRouter>
       </Provider>
     );
@@ -55,12 +56,14 @@ describe('Проверка компонента FormLogin', () => {
     expect(Form).toBeInTheDocument();
   });
 
-  test('Проверка наличия инпутов логина, пароля', () => {
+  test('Проверка наличия инпутов логина, пароля, проверки пароля', () => {
     const accountModalHandler = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+          <FormNewAccount
+            accountModalHandler={accountModalHandler}
+          ></FormNewAccount>
         </BrowserRouter>
       </Provider>
     );
@@ -69,6 +72,8 @@ describe('Проверка компонента FormLogin', () => {
     expect(inputLogin).toBeInTheDocument();
     const inputPassword = screen.getByPlaceholderText('Пароль');
     expect(inputPassword).toBeInTheDocument();
+    const inputCheck = screen.getByPlaceholderText('Повторите пароль');
+    expect(inputCheck).toBeInTheDocument();
   });
 
   test('Проверка наличия кнопок', () => {
@@ -76,7 +81,9 @@ describe('Проверка компонента FormLogin', () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+          <FormNewAccount
+            accountModalHandler={accountModalHandler}
+          ></FormNewAccount>
         </BrowserRouter>
       </Provider>
     );
@@ -90,7 +97,9 @@ describe('Проверка компонента FormLogin', () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+          <FormNewAccount
+            accountModalHandler={accountModalHandler}
+          ></FormNewAccount>
         </BrowserRouter>
       </Provider>
     );
@@ -104,20 +113,25 @@ describe('Проверка компонента FormLogin', () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+          <FormNewAccount
+            accountModalHandler={accountModalHandler}
+          ></FormNewAccount>
         </BrowserRouter>
       </Provider>
     );
 
-    const inputLogin = screen.getByTestId('Login');
-    const inputPassword = screen.getByTestId('Password');
-
-    const submitButton = screen.getByText('Войти');
+    const inputLogin = screen.getByPlaceholderText('Логин');
+    const inputPassword = screen.getByPlaceholderText('Пароль');
+    const inputCheck = screen.getByPlaceholderText('Повторите пароль');
+    const submitButton = screen.getByText('Создать');
 
     await fireEvent.change(inputLogin, {
       target: { value: 'testloginpassworddonotrespond' },
     });
     await fireEvent.change(inputPassword, {
+      target: { value: 'testloginpassworddonotrespond' },
+    });
+    await fireEvent.change(inputCheck, {
       target: { value: 'testloginpassworddonotrespond' },
     });
 
@@ -127,36 +141,69 @@ describe('Проверка компонента FormLogin', () => {
     expect(alert).toBeInTheDocument();
   });
 
-  test('Введите свой псевдоним! Введите пароль! ', async () => {
+  test('Введите свой псевдоним! Введите пароль! Повторите пароль! ', async () => {
     const accountModalHandler = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+          <FormNewAccount
+            accountModalHandler={accountModalHandler}
+          ></FormNewAccount>
         </BrowserRouter>
       </Provider>
     );
 
-    const submitButton = screen.getByText('Войти');
-    await fireEvent.submit(submitButton);
-    const alertLogin = await screen.findByText('Введите свой псевдоним!');
-    const alertPassword = await screen.findByText('Введите пароль!');
-    expect(alertLogin).toBeInTheDocument();
-    expect(alertPassword).toBeInTheDocument();
+    const inputPassword = screen.getByPlaceholderText('Пароль');
+    const inputCheck = screen.getByPlaceholderText('Повторите пароль');
+
+    await fireEvent.change(inputPassword, {
+      target: { value: 'testloginpassworddonotrespond' },
+    });
+    await fireEvent.change(inputCheck, {
+      target: { value: 'testloginpassworddonotrespond235325235' },
+    });
+
+    const alertCheck = await screen.findByText('Пароли не совпадают!');
+
+    expect(alertCheck).toBeInTheDocument();
   });
 
-  test('Вызывается ли функция accountModalHandler при нажатии на кнопку ~Нет аккаунта?~', async () => {
+  test('Пароли не совпадают! ', async () => {
     const accountModalHandler = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+          <FormNewAccount
+            accountModalHandler={accountModalHandler}
+          ></FormNewAccount>
+        </BrowserRouter>
+      </Provider>
+    );
+
+    const submitButton = screen.getByText('Создать');
+    await fireEvent.submit(submitButton);
+    const alertLogin = await screen.findByText('Введите свой псевдоним!');
+    const alertPassword = await screen.findByText('Введите пароль!');
+    const alertCheck = await screen.findByText('Повторите пароль!');
+    expect(alertLogin).toBeInTheDocument();
+    expect(alertPassword).toBeInTheDocument();
+    expect(alertCheck).toBeInTheDocument();
+  });
+
+  test('Вызывается ли функция accountModalHandler при нажатии на кнопку ~Есть аккаунт?~', async () => {
+    const accountModalHandler = jest.fn();
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormNewAccount
+            accountModalHandler={accountModalHandler}
+          ></FormNewAccount>
         </BrowserRouter>
       </Provider>
     );
 
     const user = userEvent.setup();
-    const linkButton = screen.getByText('Нет аккаунта?');
+    const linkButton = screen.getByText('Есть аккаунт?');
     expect(linkButton).toBeInTheDocument();
 
     await user.click(linkButton);
@@ -170,7 +217,9 @@ describe('Проверка компонента FormLogin', () => {
       .create(
         <Provider store={store}>
           <BrowserRouter>
-            <FormLogin accountModalHandler={accountModalHandler}></FormLogin>
+            <FormNewAccount
+              accountModalHandler={accountModalHandler}
+            ></FormNewAccount>
           </BrowserRouter>
         </Provider>
       )
