@@ -4,7 +4,7 @@ import {
   IAccountModalHandlerProps,
   IRegisterFormValues,
 } from '../../types/types';
-import { useNewAccMutation } from '../../services/authService';
+import { useNewAccMutation } from '../../redux/authService';
 import { useState } from 'react';
 
 const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {

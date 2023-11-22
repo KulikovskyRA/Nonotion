@@ -13,7 +13,7 @@ const { Text } = Typography;
 const { Header } = Layout;
 
 import { capitalize } from 'lodash';
-import { authAPI, useLogoutMutation } from '../../services/authService';
+import { authAPI, useLogoutMutation } from '../../redux/authService';
 
 const Navbar = () => {
   const {
@@ -73,7 +73,7 @@ const Navbar = () => {
           />
 
           {!data?.user?.id ? (
-            <div>
+            <div data-testid="authNone">
               <Button
                 onClick={() => accountModalHandler(true, 'login')}
                 type="primary"
@@ -86,7 +86,7 @@ const Navbar = () => {
               </Button>
             </div>
           ) : (
-            <div>
+            <div data-testid="authYes">
               <Text
                 style={{
                   color: 'white',
