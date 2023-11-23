@@ -58,63 +58,61 @@ const Navbar = () => {
 
   return (
     <>
-      <Layout>
-        <Header
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-          }}
-        >
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            style={{ minWidth: '250px' }}
-            // ! Если находимся на странице юзера, то дефолтный пункт меню будет там же
-            defaultSelectedKeys={
-              location.pathname.includes('mytodos')
-                ? ['3']
-                : location.pathname.includes('users')
-                ? ['2']
-                : ['1']
-            }
-            items={items}
-          />
+      <Header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+      >
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          style={{ minWidth: '250px' }}
+          // ! Если находимся на странице юзера, то дефолтный пункт меню будет там же
+          defaultSelectedKeys={
+            location.pathname.includes('mytodos')
+              ? ['3']
+              : location.pathname.includes('users')
+              ? ['2']
+              : ['1']
+          }
+          items={items}
+        />
 
-          {!data?.user?.id ? (
-            <div data-testid="authNone">
-              <Button
-                onClick={() => accountModalHandler(true, 'login')}
-                type="primary"
-                style={{ marginRight: '10px' }}
-              >
-                Вход
-              </Button>
-              <Button onClick={() => accountModalHandler(true, 'register')}>
-                Регистрация
-              </Button>
-            </div>
-          ) : (
-            <div data-testid="authYes">
-              <Text
-                style={{
-                  color: 'white',
-                  paddingRight: '10px ',
-                }}
-                strong
-                italic
-              >
-                {capitalize(data.user.name)}
-              </Text>
-              <Button
-                type="link"
-                onClick={() => logout('')}
-                icon={<PoweroffOutlined />}
-              />
-            </div>
-          )}
-        </Header>
-      </Layout>
+        {!data?.user?.id ? (
+          <div data-testid="authNone">
+            <Button
+              onClick={() => accountModalHandler(true, 'login')}
+              type="primary"
+              style={{ marginRight: '10px' }}
+            >
+              Вход
+            </Button>
+            <Button onClick={() => accountModalHandler(true, 'register')}>
+              Регистрация
+            </Button>
+          </div>
+        ) : (
+          <div data-testid="authYes">
+            <Text
+              style={{
+                color: 'white',
+                paddingRight: '10px ',
+              }}
+              strong
+              italic
+            >
+              {capitalize(data.user.name)}
+            </Text>
+            <Button
+              type="link"
+              onClick={() => logout('')}
+              icon={<PoweroffOutlined />}
+            />
+          </div>
+        )}
+      </Header>
 
       <Modal
         style={{ maxWidth: 400 }}

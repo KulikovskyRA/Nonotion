@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ITodo } from '../types/types';
 
 export const todoAPI = createApi({
   reducerPath: 'todoAPI',
@@ -9,11 +10,20 @@ export const todoAPI = createApi({
   tagTypes: ['TodoTag'],
 
   endpoints: (builder) => ({
-    allMyTodos: builder.query<IQueryUserData, void>({
+    allMyTodos: builder.query<Array<ITodo>, void>({
       query: () => ({ url: '/all' }),
       providesTags: ['TodoTag'],
+    }),
+
+    newTodo: builder.mutation({
+      query: (innerValue) => ({
+        url: '/new',
+        method: 'POST',
+        body: innerValue,
+      }),
+      invalidatesTags: ['TodoTag'],
     }),
   }),
 });
 
-export const { useAllMyTodosQuery } = todoAPI;
+export const { useAllMyTodosQuery, useNewTodoMutation } = todoAPI;

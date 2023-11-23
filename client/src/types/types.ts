@@ -24,3 +24,10 @@ export interface IRegisterFormValues {
   password: string;
   confirm: string;
 }
+
+export interface ITodo {
+  id: number;
+  inner: string;
+  updatedAt: string;
+  createdAt: string;
+}

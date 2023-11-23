@@ -18,7 +18,7 @@ module.exports = todoRouter
       const allMyTodos = await Todo.findAll({
         where: { userId: req.session.user.id },
         order: [['id', 'ASC']],
-        attributes: ['id', 'inner', 'updatedAt'],
+        attributes: ['id', 'inner', 'updatedAt', 'createdAt'],
       });
       res.json(allMyTodos);
     } catch (error) {
@@ -43,16 +43,14 @@ module.exports = todoRouter
           .json({ type: 'Проблема авторизации при создании todo' });
       } else {
         const { inner } = req.body;
+        console.log(inner);
         try {
-          const response = await Todo.create({
+          await Todo.create({
             inner,
             userId: req.session.user.id,
           });
-          if (response.ok) {
-            res.sendStatus(200);
-          } else {
-            res.status(400).json({ type: 'Ошибка при создании Todo' });
-          }
+
+          res.sendStatus(200);
         } catch (err) {
           res.status(400).json({ type: 'Что-то пошло не так' });
         }
