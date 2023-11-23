@@ -50,6 +50,10 @@ const Navbar = () => {
       label: <Link to={`/users/${data?.user.id || 0}`}>Profile</Link>,
       key: '2',
     },
+    {
+      label: <Link to={`/mytodos`}>Todos</Link>,
+      key: '3',
+    },
   ];
 
   return (
@@ -65,9 +69,14 @@ const Navbar = () => {
           <Menu
             theme="dark"
             mode="horizontal"
+            style={{ minWidth: '250px' }}
             // ! Если находимся на странице юзера, то дефолтный пункт меню будет там же
             defaultSelectedKeys={
-              location.pathname.includes('users') ? ['2'] : ['1']
+              location.pathname.includes('mytodos')
+                ? ['3']
+                : location.pathname.includes('users')
+                ? ['2']
+                : ['1']
             }
             items={items}
           />

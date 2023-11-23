@@ -9,6 +9,7 @@ import FooterComp from './components/FooterComp/FooterComp';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { Route, Routes } from 'react-router-dom';
+import TodoPage from './pages/TodoPage/TodoPage';
 
 function App(): JSX.Element {
   return (
@@ -19,6 +20,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/users/:id" element={<ProfilePage />} />
+            <Route path="/mytodos" element={<TodoPage />} />
           </Routes>
         </Content>
         <FooterComp />
