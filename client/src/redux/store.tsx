@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { authAPI } from './authService';
-import { todoAPI } from './todoService';
+import { authAPI } from './services/authService';
+import { todoAPI } from './services/todoService';
 
 const rootReducer = combineReducers({
   [authAPI.reducerPath]: authAPI.reducer,

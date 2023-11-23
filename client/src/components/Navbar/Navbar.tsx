@@ -13,7 +13,7 @@ const { Text } = Typography;
 const { Header } = Layout;
 
 import { capitalize } from 'lodash';
-import { authAPI, useLogoutMutation } from '../../redux/authService';
+import { authAPI, useLogoutMutation } from '../../redux/services/authService';
 
 const Navbar = () => {
   const {

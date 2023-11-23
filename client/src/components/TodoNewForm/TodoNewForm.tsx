@@ -1,6 +1,6 @@
 import { Button, Input } from 'antd';
 import { ChangeEvent, useState } from 'react';
-import { useNewTodoMutation } from '../../redux/todoService';
+import { useNewTodoMutation } from '../../redux/services/todoService';
 
 const TodoNewForm = () => {
   const [newTodo] = useNewTodoMutation();

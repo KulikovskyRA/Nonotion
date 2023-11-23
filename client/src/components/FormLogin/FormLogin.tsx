@@ -3,7 +3,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { IAccountModalHandlerProps, ILoginFormValues } from '../../types/types';
 
-import { useLoginMutation } from '../../redux/authService';
+import { useLoginMutation } from '../../redux/services/authService';
 import { useState } from 'react';
 
 const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {

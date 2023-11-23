@@ -1,5 +1,5 @@
 import React from 'react';
-import { todoAPI } from '../../redux/todoService';
+import { todoAPI } from '../../redux/services/todoService';
 
 const TodoList = () => {
   const { data } = todoAPI.useAllMyTodosQuery();

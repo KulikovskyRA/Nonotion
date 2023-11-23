@@ -43,11 +43,12 @@ module.exports = todoRouter
           .json({ type: 'Проблема авторизации при создании todo' });
       } else {
         const { inner } = req.body;
-        console.log(inner);
+
         try {
           await Todo.create({
             inner,
             userId: req.session.user.id,
+            isDone: false,
           });
 
           res.sendStatus(200);
