@@ -8,6 +8,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 const authRouter = require('./src/routes/auth.router');
+const todoRouter = require('./src/routes/todo.router');
 
 const { PORT, CORS_URL, SECRET_KEY_SESSION } = process.env;
 
@@ -34,6 +35,7 @@ app.use(cors({ credentials: true, origin: [CORS_URL] })); //!
 //! Routes
 
 app.use('/api/auth', authRouter);
+app.use('/api/todo', todoRouter);
 
 app.listen(PORT, () => {
   console.log('Сервер работает!');

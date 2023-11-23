@@ -30,8 +30,6 @@ module.exports = authRouter
           // Проверка на наличие аккаунта с таким же username
           const userCheck = await User.findOne({ where: { name }, raw: true });
 
-          //   console.log(userCheck);
-
           if (!userCheck) {
             const response = await User.create({
               name,
@@ -39,7 +37,6 @@ module.exports = authRouter
             });
 
             const userSessionData = { id: response.id, name: response.name };
-
             req.session.user = userSessionData;
 
             res.status(200).json({ user: userSessionData });
@@ -62,8 +59,6 @@ module.exports = authRouter
     //! пароль дб больше 5 знаков
     // body('password').isString().isLength({ min: 5, max: 15 }),
     async (req, res) => {
-      // console.log(req.body);
-
       //! Проверка на ошибки валидации
       const { errors } = validationResult(req);
       if (errors.length) {
