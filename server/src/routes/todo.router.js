@@ -18,7 +18,7 @@ module.exports = todoRouter
       const allMyTodos = await Todo.findAll({
         where: { userId: req.session.user.id },
         order: [['id', 'ASC']],
-        attributes: ['id', 'inner', 'updatedAt', 'createdAt'],
+        attributes: ['id', 'inner', 'updatedAt', 'createdAt', 'isDone'],
       });
       res.json(allMyTodos);
     } catch (error) {

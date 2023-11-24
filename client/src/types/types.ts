@@ -30,4 +30,5 @@ export interface ITodo {
   inner: string;
   updatedAt: string;
   createdAt: string;
+  isDone: boolean;
 }

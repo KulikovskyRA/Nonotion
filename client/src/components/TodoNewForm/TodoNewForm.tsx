@@ -12,6 +12,7 @@ const TodoNewForm = () => {
 
   function createTodo() {
     newTodo({ inner: innerValue });
+    setInnerValue('');
   }
 
   return (
@@ -22,7 +23,7 @@ const TodoNewForm = () => {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
-        minWidth: 330,
+        minWidth: 350,
       }}
     >
       <Input

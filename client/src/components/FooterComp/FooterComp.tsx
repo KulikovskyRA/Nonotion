@@ -6,9 +6,9 @@ const FooterComp = () => {
     <Footer
       data-testid="Footer"
       style={{
-        backgroundColor: '#001529',
+        backgroundColor: 'white',
         textAlign: 'center',
-        color: 'white',
+        color: 'black',
         padding: 10,
       }}
     >

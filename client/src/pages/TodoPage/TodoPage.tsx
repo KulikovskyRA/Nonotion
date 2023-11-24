@@ -11,7 +11,7 @@ const TodoPage = () => {
         justifyContent: 'start',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 30,
+        gap: 15,
         paddingTop: 5,
       }}
     >

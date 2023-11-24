@@ -63,12 +63,13 @@ const Navbar = () => {
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
+          backgroundColor: 'white',
         }}
       >
         <Menu
-          theme="dark"
+          theme="light"
           mode="horizontal"
-          style={{ minWidth: '250px' }}
+          style={{ minWidth: '230px' }}
           // ! Если находимся на странице юзера, то дефолтный пункт меню будет там же
           defaultSelectedKeys={
             location.pathname.includes('mytodos')
@@ -81,7 +82,7 @@ const Navbar = () => {
         />
 
         {!data?.user?.id ? (
-          <div data-testid="authNone">
+          <div data-testid="authNone" style={{ minWidth: '60px' }}>
             <Button
               onClick={() => accountModalHandler(true, 'login')}
               type="primary"
@@ -94,14 +95,12 @@ const Navbar = () => {
             </Button>
           </div>
         ) : (
-          <div data-testid="authYes">
+          <div data-testid="authYes" style={{ minWidth: '60px' }}>
             <Text
               style={{
-                color: 'white',
-                paddingRight: '10px ',
+                color: 'black',
+                paddingRight: '10px',
               }}
-              strong
-              italic
             >
               {capitalize(data.user.name)}
             </Text>
