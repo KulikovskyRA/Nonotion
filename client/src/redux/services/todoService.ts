@@ -23,7 +23,8 @@ export const todoAPI = createApi({
       }),
       invalidatesTags: ['TodoTag'],
     }),
-    updateTodo: builder.mutation({
+
+    updateTodoStatus: builder.mutation({
       query: (updateData) => ({
         url: '/',
         method: 'PATCH',
@@ -31,8 +32,31 @@ export const todoAPI = createApi({
       }),
       invalidatesTags: ['TodoTag'],
     }),
+
+    updateTodoInner: builder.mutation({
+      query: (updateData) => ({
+        url: '/inner',
+        method: 'PATCH',
+        body: updateData,
+      }),
+      invalidatesTags: ['TodoTag'],
+    }),
+
+    deleteTodo: builder.mutation({
+      query: (deleteData) => ({
+        url: '/',
+        method: 'DELETE',
+        body: deleteData,
+      }),
+      invalidatesTags: ['TodoTag'],
+    }),
   }),
 });
 
-export const { useAllMyTodosQuery, useNewTodoMutation, useUpdateTodoMutation } =
-  todoAPI;
+export const {
+  useAllMyTodosQuery,
+  useNewTodoMutation,
+  useUpdateTodoStatusMutation,
+  useDeleteTodoMutation,
+  useUpdateTodoInnerMutation,
+} = todoAPI;

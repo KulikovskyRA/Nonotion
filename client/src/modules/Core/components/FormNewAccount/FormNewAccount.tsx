@@ -1,31 +1,30 @@
 import { Alert, Button, Flex, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-
-import { IAccountModalHandlerProps, ILoginFormValues } from '../../types/types';
-
-import { useLoginMutation } from '../../redux/services/authService';
+import {
+  IAccountModalHandlerProps,
+  IRegisterFormValues,
+} from '../../../../types/types';
+import { useNewAccMutation } from '../../../../redux/services/authService';
 import { useState } from 'react';
 
-const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
-  console.log('---> FormLogin');
+const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
+  console.log('---> FormNewAccount');
 
   const [errorAlert, setErrorAlert] = useState({
     status: false,
     errorInfo: '',
   });
+  const [newAcc] = useNewAccMutation();
 
-  const [login] = useLoginMutation();
-
-  function onFinish(values: ILoginFormValues) {
+  function onFinish(values: IRegisterFormValues) {
     setErrorAlert((prev) => ({ ...prev, status: false }));
-    login(values)
+    newAcc(values)
       .unwrap()
-      .then(() => accountModalHandler(false, 'login'))
+      .then(() => accountModalHandler(false, 'register'))
       .catch((error) =>
         setErrorAlert({ status: true, errorInfo: error?.data?.type })
       );
   }
-
   return (
     <>
       {errorAlert.status && (
@@ -40,6 +39,8 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
       <Form
         data-testid="Form"
         name="basic"
+        wrapperCol={{ span: 16 }}
+        style={{ width: 500, maxWidth: 520 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"
@@ -49,7 +50,6 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
           rules={[{ required: true, message: 'Введите свой псевдоним!' }]}
         >
           <Input
-            data-testid="Login"
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Логин"
           />
@@ -60,24 +60,45 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
           rules={[{ required: true, message: 'Введите пароль!' }]}
         >
           <Input.Password
-            data-testid="Password"
             prefix={<LockOutlined className="site-form-item-icon" />}
             placeholder="Пароль"
           />
         </Form.Item>
 
-        <Flex justify="center" gap="large">
+        <Form.Item
+          name="confirm"
+          dependencies={['password']}
+          rules={[
+            { required: true, message: 'Повторите пароль!' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('Пароли не совпадают!'));
+              },
+            }),
+          ]}
+          hasFeedback
+        >
+          <Input.Password
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            placeholder="Повторите пароль"
+          />
+        </Form.Item>
+
+        <Flex justify="start" gap="large">
           <Form.Item>
             <Button
-              onClick={() => accountModalHandler(true, 'register')}
+              onClick={() => accountModalHandler(true, 'login')}
               type="link"
             >
-              Нет аккаунта?
+              Есть аккаунт?
             </Button>
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Войти
+              Создать
             </Button>
           </Form.Item>
         </Flex>
@@ -86,4 +107,4 @@ const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
   );
 };
 
-export default FormLogin;
+export default FormNewAccount;

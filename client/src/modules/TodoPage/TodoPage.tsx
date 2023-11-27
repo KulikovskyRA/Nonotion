@@ -1,5 +1,5 @@
-import TodoTabs from '../../components/TodoTabs/TodoTabs';
-import TodoNewForm from '../../components/TodoNewForm/TodoNewForm';
+import TodoTabs from './components/TodoTabs/TodoTabs';
+import TodoNewForm from './components/TodoNewForm/TodoNewForm';
 import { Layout } from 'antd';
 
 const TodoPage = () => {

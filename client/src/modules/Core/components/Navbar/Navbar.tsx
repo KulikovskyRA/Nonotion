@@ -1,6 +1,6 @@
 import { Layout, Menu, Button, Modal } from 'antd';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { PoweroffOutlined } from '@ant-design/icons';
 import FormLogin from '../FormLogin/FormLogin';
@@ -13,9 +13,14 @@ const { Text } = Typography;
 const { Header } = Layout;
 
 import { capitalize } from 'lodash';
-import { authAPI, useLogoutMutation } from '../../redux/services/authService';
+
+import {
+  authAPI,
+  useLogoutMutation,
+} from '../../../../redux/services/authService';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const {
     data,
     // error, isLoading
@@ -29,6 +34,12 @@ const Navbar = () => {
     logout,
     // { isLoading: isUpdating }
   ] = useLogoutMutation();
+
+  function logoutFunction(): void {
+    logout('');
+    //! //! //!
+    navigate(0);
+  }
 
   const location = useLocation();
 
@@ -106,7 +117,7 @@ const Navbar = () => {
             </Text>
             <Button
               type="link"
-              onClick={() => logout('')}
+              onClick={() => logoutFunction()}
               icon={<PoweroffOutlined />}
             />
           </div>

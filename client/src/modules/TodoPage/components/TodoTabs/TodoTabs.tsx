@@ -1,4 +1,4 @@
-import { todoAPI } from '../../redux/services/todoService';
+import { todoAPI } from '../../../../redux/services/todoService';
 import { Tabs, TabsProps } from 'antd';
 
 import TodoList from '../TodoList/TodoList';
@@ -16,17 +16,17 @@ const TodoTabs = () => {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: 'All Todos',
+      label: 'Все задачи',
       children: <TodoList todos={data} />,
     },
     {
       key: '2',
-      label: 'Done',
+      label: 'Выполненные',
       children: <TodoList todos={doneTodos} />,
     },
     {
       key: '3',
-      label: 'Undone',
+      label: 'Не выполненные',
       children: <TodoList todos={undoneTodos} />,
     },
   ];

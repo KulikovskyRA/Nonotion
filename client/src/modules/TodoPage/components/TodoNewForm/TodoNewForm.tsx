@@ -1,6 +1,6 @@
 import { Button, Input } from 'antd';
 import { ChangeEvent, useState } from 'react';
-import { useNewTodoMutation } from '../../redux/services/todoService';
+import { useNewTodoMutation } from '../../../../redux/services/todoService';
 
 const TodoNewForm = () => {
   const [newTodo] = useNewTodoMutation();
@@ -30,6 +30,7 @@ const TodoNewForm = () => {
         value={innerValue}
         placeholder="Суть задачи"
         onChange={changeHandler}
+        onPressEnter={createTodo}
       />
       <Button type="primary" onClick={createTodo}>
         Создать

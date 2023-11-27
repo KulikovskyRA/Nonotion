@@ -33,6 +33,11 @@ export interface ITodo {
   isDone: boolean;
 }
 
+export interface IChangeTodo {
+  id: number;
+  inner: string;
+}
+
 export interface ITodosProps {
   todos: Array<ITodo> | undefined;
 }

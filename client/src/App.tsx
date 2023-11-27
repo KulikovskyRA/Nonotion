@@ -1,15 +1,15 @@
 import './App.scss';
 
-import HomePage from './pages/HomePage/HomePage';
+import HomePage from './modules/HomePage/HomePage';
 
-import ProfilePage from './pages/ProfilePage/ProfilePage';
+import ProfilePage from './modules/ProfilePage/ProfilePage';
 
-import Navbar from './components/Navbar/Navbar';
-import FooterComp from './components/FooterComp/FooterComp';
+import Navbar from './modules/Core/components/Navbar/Navbar';
+import FooterComp from './modules/Core/components/FooterComp/FooterComp';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { Route, Routes } from 'react-router-dom';
-import TodoPage from './pages/TodoPage/TodoPage';
+import TodoPage from './modules/TodoPage/TodoPage';
 
 function App(): JSX.Element {
   return (
