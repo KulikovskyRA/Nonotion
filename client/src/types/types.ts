@@ -32,3 +32,7 @@ export interface ITodo {
   createdAt: string;
   isDone: boolean;
 }
+
+export interface ITodosProps {
+  todos: Array<ITodo> | undefined;
+}

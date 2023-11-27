@@ -1,5 +1,4 @@
-import React from 'react';
-import TodoList from '../../components/TodoList/TodoList';
+import TodoTabs from '../../components/TodoTabs/TodoTabs';
 import TodoNewForm from '../../components/TodoNewForm/TodoNewForm';
 import { Layout } from 'antd';
 
@@ -16,7 +15,7 @@ const TodoPage = () => {
       }}
     >
       <TodoNewForm />
-      <TodoList />
+      <TodoTabs />
     </Layout>
   );
 };

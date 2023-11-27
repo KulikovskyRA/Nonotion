@@ -17,7 +17,7 @@ module.exports = todoRouter
 
       const allMyTodos = await Todo.findAll({
         where: { userId: req.session.user.id },
-        order: [['id', 'ASC']],
+        order: [['id', 'DESC']],
         attributes: ['id', 'inner', 'updatedAt', 'createdAt', 'isDone'],
       });
       res.json(allMyTodos);
@@ -57,4 +57,20 @@ module.exports = todoRouter
         }
       }
     }
-  );
+  )
+
+  .patch('/', body('id').isNumeric().notEmpty(), async (req, res) => {
+    ///! Проверка на ошибки валидации
+    const { errors } = validationResult(req);
+    if (errors.length) {
+      res.status(400).json({ type: 'Проблема валидации данных' });
+    }
+    try {
+      const todo = await Todo.findByPk(req.body.id);
+      todo.isDone = !todo.isDone;
+      todo.save();
+      res.sendStatus(200);
+    } catch (err) {
+      res.sendStatus(404);
+    }
+  });
