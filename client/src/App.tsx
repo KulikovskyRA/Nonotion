@@ -15,6 +15,8 @@ import { useState } from 'react';
 import { BgColorsOutlined } from '@ant-design/icons/lib/icons';
 
 import { FloatButton } from 'antd';
+import { authAPI } from './redux/services/authService';
+import PageNotAuth from './modules/Core/components/PageNotAuth/PageNotAuth';
 
 function App(): JSX.Element {
   const [darkMode, setDarkMode] = useState(
@@ -26,6 +28,10 @@ function App(): JSX.Element {
       : localStorage.setItem('mode', 'false');
     setDarkMode((prev: boolean) => !prev);
   }
+  const {
+    data,
+    // error, isLoading
+  } = authAPI.useCheckAuthQuery();
   return (
     <ConfigProvider
       theme={{
@@ -36,12 +42,18 @@ function App(): JSX.Element {
       <Layout style={{ minHeight: '100vh' }}>
         <Navbar darkMode={darkMode} />
         <Content style={{ margin: '26px' }}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/users/:id" element={<ProfilePage />} />
-            <Route path="/mytodos" element={<TodoPage />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
+          {!data?.user?.id ? (
+            <Routes>
+              <Route path="*" element={<PageNotAuth />} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/users/:id" element={<ProfilePage />} />
+              <Route path="/mytodos" element={<TodoPage />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          )}
         </Content>
         <FloatButton onClick={switchMode} icon={<BgColorsOutlined />} />
         <FooterComp darkMode={darkMode} />
