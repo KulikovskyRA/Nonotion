@@ -9,7 +9,7 @@ import { Flex } from 'antd';
 const PageNotFound = () => {
   return (
     <Flex gap="small" justify="center" align="center" vertical>
-      <Title style={{ margin: 0 }}>404</Title>
+      <Title style={{ fontSize: '210px', margin: 0 }}>404</Title>
       <Title style={{ marginTop: 0 }} level={2}>
         Страница не существует или была удалена
       </Title>

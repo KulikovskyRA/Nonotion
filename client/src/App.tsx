@@ -17,9 +17,14 @@ import { BgColorsOutlined } from '@ant-design/icons/lib/icons';
 import { FloatButton } from 'antd';
 
 function App(): JSX.Element {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(
+    JSON.parse(localStorage.getItem('mode') || 'false')
+  );
   function switchMode() {
-    setDarkMode((prev) => !prev);
+    !darkMode
+      ? localStorage.setItem('mode', 'true')
+      : localStorage.setItem('mode', 'false');
+    setDarkMode((prev: boolean) => !prev);
   }
   return (
     <ConfigProvider
