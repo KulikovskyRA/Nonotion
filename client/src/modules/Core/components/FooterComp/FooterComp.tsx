@@ -1,14 +1,13 @@
 import { Footer } from 'antd/lib/layout/layout';
 
-const FooterComp = () => {
-  console.log('Footer - rendering');
+const FooterComp = ({ darkMode }: { darkMode: boolean }) => {
   return (
     <Footer
       data-testid="Footer"
       style={{
-        backgroundColor: 'white',
+        color: darkMode ? 'white' : 'black',
+        backgroundColor: darkMode ? '#141414' : 'white',
         textAlign: 'center',
-        color: 'black',
         padding: 10,
       }}
     >

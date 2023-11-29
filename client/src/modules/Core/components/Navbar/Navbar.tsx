@@ -19,7 +19,7 @@ import {
   useLogoutMutation,
 } from '../../../../redux/services/authService';
 
-const Navbar = () => {
+const Navbar = ({ darkMode }: { darkMode: boolean }) => {
   const navigate = useNavigate();
   const {
     data,
@@ -74,11 +74,10 @@ const Navbar = () => {
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
-          backgroundColor: 'white',
+          backgroundColor: darkMode ? '#141414' : 'white',
         }}
       >
         <Menu
-          theme="light"
           mode="horizontal"
           style={{ minWidth: '230px' }}
           // ! Если находимся на странице юзера, то дефолтный пункт меню будет там же
@@ -109,7 +108,6 @@ const Navbar = () => {
           <div data-testid="authYes" style={{ minWidth: '60px' }}>
             <Text
               style={{
-                color: 'black',
                 paddingRight: '10px',
               }}
             >
