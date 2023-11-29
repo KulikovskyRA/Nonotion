@@ -42,18 +42,18 @@ function App(): JSX.Element {
       <Layout style={{ minHeight: '100vh' }}>
         <Navbar darkMode={darkMode} />
         <Content style={{ margin: '26px' }}>
-          {!data?.user?.id ? (
-            <Routes>
+          <Routes>
+            {!data?.user?.id ? (
               <Route path="*" element={<PageNotAuth />} />
-            </Routes>
-          ) : (
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/users/:id" element={<ProfilePage />} />
-              <Route path="/mytodos" element={<TodoPage />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          )}
+            ) : (
+              <>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/users/:id" element={<ProfilePage />} />
+                <Route path="/mytodos" element={<TodoPage />} />
+                <Route path="*" element={<PageNotFound />} />
+              </>
+            )}
+          </Routes>
         </Content>
         <FloatButton onClick={switchMode} icon={<BgColorsOutlined />} />
         <FooterComp darkMode={darkMode} />
