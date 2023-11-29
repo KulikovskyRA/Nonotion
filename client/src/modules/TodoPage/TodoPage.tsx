@@ -10,7 +10,7 @@ const TodoPage = () => {
         justifyContent: 'start',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 15,
+        gap: 10,
         paddingTop: 5,
       }}
     >
