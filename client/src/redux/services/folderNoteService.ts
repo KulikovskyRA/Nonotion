@@ -14,6 +14,15 @@ export const folderAPI = createApi({
       providesTags: ['FolderTag'],
     }),
 
-    // newFolder: builder.mutation({}),
+    newFolder: builder.mutation({
+      query: (props) => ({
+        url: 'folder/new',
+        method: 'POST',
+        body: props,
+      }),
+      invalidatesTags: ['FolderTag'],
+    }),
   }),
 });
+
+export const { useAllFoldersQuery, useNewFolderMutation } = folderAPI;
