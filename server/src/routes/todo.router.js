@@ -13,14 +13,14 @@ module.exports = todoRouter
         res
           .status(400)
           .json({ type: 'Проблема авторизации при создании todo' });
+      } else {
+        const allMyTodos = await Todo.findAll({
+          where: { userId: req.session.user.id },
+          order: [['id', 'DESC']],
+          attributes: ['id', 'inner', 'updatedAt', 'createdAt', 'isDone'],
+        });
+        res.json(allMyTodos);
       }
-
-      const allMyTodos = await Todo.findAll({
-        where: { userId: req.session.user.id },
-        order: [['id', 'DESC']],
-        attributes: ['id', 'inner', 'updatedAt', 'createdAt', 'isDone'],
-      });
-      res.json(allMyTodos);
     } catch (error) {
       res.sendStatus(400);
     }
@@ -64,17 +64,18 @@ module.exports = todoRouter
     const { errors } = validationResult(req);
     if (errors.length) {
       res.status(400).json({ type: 'Проблема валидации данных' });
-    }
-    try {
-      const todo = await Todo.findByPk(req.body.id);
-      if (todo.userId !== req?.session?.user?.id) {
-        res.status(400).json({ type: 'Не авторизованное изменение' });
+    } else {
+      try {
+        const todo = await Todo.findByPk(req.body.id);
+        if (todo.userId !== req?.session?.user?.id) {
+          res.status(400).json({ type: 'Не авторизованное изменение' });
+        }
+        todo.isDone = !todo.isDone;
+        todo.save();
+        res.sendStatus(200);
+      } catch (err) {
+        res.sendStatus(404);
       }
-      todo.isDone = !todo.isDone;
-      todo.save();
-      res.sendStatus(200);
-    } catch (err) {
-      res.sendStatus(404);
     }
   })
 
@@ -87,17 +88,18 @@ module.exports = todoRouter
       const { errors } = validationResult(req);
       if (errors.length) {
         res.status(400).json({ type: 'Проблема валидации данных' });
-      }
-      try {
-        const todo = await Todo.findByPk(req.body.id);
-        if (todo.userId !== req.session.user.id) {
-          res.status(400).json({ type: 'Не авторизованное изменение' });
+      } else {
+        try {
+          const todo = await Todo.findByPk(req.body.id);
+          if (todo.userId !== req.session.user.id) {
+            res.status(400).json({ type: 'Не авторизованное изменение' });
+          }
+          todo.inner = req.body.inner;
+          todo.save();
+          res.sendStatus(200);
+        } catch (err) {
+          res.sendStatus(404);
         }
-        todo.inner = req.body.inner;
-        todo.save();
-        res.sendStatus(200);
-      } catch (err) {
-        res.sendStatus(404);
       }
     }
   )
@@ -107,14 +109,14 @@ module.exports = todoRouter
     const { errors } = validationResult(req);
     if (errors.length) {
       res.status(400).json({ type: 'Проблема валидации данных' });
-    }
-    if (!req.session.user.id) {
+    } else if (!req.session.user.id) {
       res.status(400).json({ type: 'Не авторизованное удаление' });
-    }
-    try {
-      Todo.destroy({ where: { id: req.body.id } });
-      res.sendStatus(200);
-    } catch (err) {
-      res.sendStatus(404);
+    } else {
+      try {
+        Todo.destroy({ where: { id: req.body.id } });
+        res.sendStatus(200);
+      } catch (err) {
+        res.sendStatus(404);
+      }
     }
   });

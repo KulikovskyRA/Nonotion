@@ -26,23 +26,22 @@ module.exports = folderRouter
 
   .post('/new', body('title').isString().notEmpty(), async (req, res) => {
     const { errors } = validationResult(req);
+
     if (errors.length) {
       res
         .status(400)
         .json({ type: 'Ошибка валидации введённых параметров', errors });
-    }
-
-    if (!req?.session?.user?.id) {
+    } else if (!req?.session?.user?.id) {
       res.status(400).json({ type: 'Не авторизованное создание папки' });
-    }
-
-    try {
-      await Folder.create({
-        title: req.body.title,
-        userId: req?.session?.user?.id,
-        isPublic: false,
-      });
-    } catch (err) {
-      res.status(400).json({ type: 'Что-то пошло не так' });
+    } else {
+      try {
+        await Folder.create({
+          title: req.body.title,
+          userId: req?.session?.user?.id,
+          isPublic: false,
+        });
+      } catch (err) {
+        res.status(400).json({ type: 'Что-то пошло не так' });
+      }
     }
   });
