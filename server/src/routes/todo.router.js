@@ -9,7 +9,7 @@ const todoRouter = new Router();
 module.exports = todoRouter
   .get('/all', async (req, res) => {
     try {
-      if (!req.session.user.id) {
+      if (!req?.session?.user?.id) {
         res
           .status(400)
           .json({ type: 'Проблема авторизации при создании todo' });
@@ -47,7 +47,7 @@ module.exports = todoRouter
         try {
           await Todo.create({
             inner,
-            userId: req.session.user.id,
+            userId: req?.session?.user?.id,
             isDone: false,
           });
 
@@ -67,7 +67,7 @@ module.exports = todoRouter
     }
     try {
       const todo = await Todo.findByPk(req.body.id);
-      if (todo.userId !== req.session.user.id) {
+      if (todo.userId !== req?.session?.user?.id) {
         res.status(400).json({ type: 'Не авторизованное изменение' });
       }
       todo.isDone = !todo.isDone;

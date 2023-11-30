@@ -69,7 +69,7 @@ const Navbar = ({ darkMode }: { darkMode: boolean }) => {
     },
     {
       label: (
-        <Link to={`/users/${data?.user.id || 0}`}>
+        <Link to={`/mynotes`}>
           <EditOutlined style={{ margin: 5 }} />
           Заметки
         </Link>
@@ -99,12 +99,12 @@ const Navbar = ({ darkMode }: { darkMode: boolean }) => {
       >
         <Menu
           mode="horizontal"
-          style={{ minWidth: '300px' }}
+          style={{ minWidth: '350px' }}
           // ! Если находимся на странице юзера, то дефолтный пункт меню будет там же
           defaultSelectedKeys={
             location.pathname.includes('mytodos')
               ? ['3']
-              : location.pathname.includes('users')
+              : location.pathname.includes('mynotes')
               ? ['2']
               : ['1']
           }

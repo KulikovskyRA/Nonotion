@@ -2,7 +2,7 @@ import './App.scss';
 
 import HomePage from './modules/HomePage/HomePage';
 
-import ProfilePage from './modules/ProfilePage/ProfilePage';
+import ProfilePage from './modules/NotePage/NotePage';
 
 import Navbar from './modules/Core/components/Navbar/Navbar';
 import FooterComp from './modules/Core/components/FooterComp/FooterComp';
@@ -41,14 +41,14 @@ function App(): JSX.Element {
     >
       <Layout style={{ minHeight: '100vh' }}>
         <Navbar darkMode={darkMode} />
-        <Content style={{ margin: '26px' }}>
+        <Content>
           <Routes>
             {!data?.user?.id ? (
               <Route path="*" element={<PageNotAuth />} />
             ) : (
               <>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/users/:id" element={<ProfilePage />} />
+                <Route path="mynotes" element={<ProfilePage />} />
                 <Route path="/mytodos" element={<TodoPage />} />
                 <Route path="*" element={<PageNotFound />} />
               </>

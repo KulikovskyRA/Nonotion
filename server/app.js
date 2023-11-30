@@ -9,6 +9,7 @@ const FileStore = require('session-file-store')(session);
 
 const authRouter = require('./src/routes/auth.router');
 const todoRouter = require('./src/routes/todo.router');
+const folderRouter = require('./src/routes/folder.router');
 
 const { PORT, CORS_URL, SECRET_KEY_SESSION } = process.env;
 
@@ -36,6 +37,7 @@ app.use(cors({ credentials: true, origin: [CORS_URL] })); //!
 
 app.use('/api/auth', authRouter);
 app.use('/api/todo', todoRouter);
+app.use('/api/folder', folderRouter);
 
 app.listen(PORT, () => {
   console.log('Сервер работает!');

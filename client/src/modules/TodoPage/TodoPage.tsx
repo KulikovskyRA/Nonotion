@@ -11,7 +11,7 @@ const TodoPage = () => {
         flexDirection: 'column',
         alignItems: 'center',
         gap: 10,
-        paddingTop: 5,
+        paddingTop: 31,
       }}
     >
       <TodoNewForm />
