@@ -2,7 +2,12 @@ import { Layout, Menu, Button, Modal } from 'antd';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { PoweroffOutlined } from '@ant-design/icons';
+import {
+  CarryOutOutlined,
+  EditOutlined,
+  HomeOutlined,
+  PoweroffOutlined,
+} from '@ant-design/icons';
 import FormLogin from '../FormLogin/FormLogin';
 import FormNewAccount from '../FormNewAccount/FormNewAccount';
 
@@ -54,15 +59,30 @@ const Navbar = ({ darkMode }: { darkMode: boolean }) => {
 
   const items: MenuProps['items'] = [
     {
-      label: <Link to="/">Home</Link>,
+      label: (
+        <Link to="/">
+          <HomeOutlined style={{ margin: 5 }} />
+          Главная
+        </Link>
+      ),
       key: '1',
     },
     {
-      label: <Link to={`/users/${data?.user.id || 0}`}>Profile</Link>,
+      label: (
+        <Link to={`/users/${data?.user.id || 0}`}>
+          <EditOutlined style={{ margin: 5 }} />
+          Заметки
+        </Link>
+      ),
       key: '2',
     },
     {
-      label: <Link to={`/mytodos`}>Todos</Link>,
+      label: (
+        <Link to={`/mytodos`}>
+          <CarryOutOutlined style={{ margin: 5 }} />
+          Задачи
+        </Link>
+      ),
       key: '3',
     },
   ];
@@ -79,7 +99,7 @@ const Navbar = ({ darkMode }: { darkMode: boolean }) => {
       >
         <Menu
           mode="horizontal"
-          style={{ minWidth: '230px' }}
+          style={{ minWidth: '300px' }}
           // ! Если находимся на странице юзера, то дефолтный пункт меню будет там же
           defaultSelectedKeys={
             location.pathname.includes('mytodos')
