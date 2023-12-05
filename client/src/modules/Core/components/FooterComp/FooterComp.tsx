@@ -8,7 +8,7 @@ const FooterComp = ({ darkMode }: { darkMode: boolean }) => {
         color: darkMode ? 'white' : 'black',
         backgroundColor: darkMode ? '#141414' : 'white',
         textAlign: 'center',
-        padding: 10,
+        padding: 8,
       }}
     >
       Nonotion ©2023 Created by Kulikovsky

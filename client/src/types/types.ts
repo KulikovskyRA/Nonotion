@@ -41,3 +41,12 @@ export interface IChangeTodo {
 export interface ITodosProps {
   todos: Array<ITodo> | undefined;
 }
+
+export interface IFolder {
+  id: number;
+  title: string;
+  userId: number;
+  isPublic: boolean;
+  updatedAt: string;
+  createdAt: string;
+}

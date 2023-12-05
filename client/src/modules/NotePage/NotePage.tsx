@@ -1,48 +1,40 @@
 import { Layout, Menu, MenuProps } from 'antd';
 import NewNoteFolder from './components/NewNoteFolder/NewNoteFolder';
 import { folderAPI } from '../../redux/services/folderNoteService';
+import { IFolder } from '../../types/types';
+import { useState } from 'react';
 
 const { Sider, Content } = Layout;
 
 const NotePage = () => {
-  const { data } = folderAPI.useAllFoldersQuery;
+  const { data } = folderAPI.useAllFoldersQuery('');
+
+  const [folder, setFolder] = useState('');
 
   const items: MenuProps['items'] = [
-    {
-      label: 'Navigation One',
-      key: 'mail',
-    },
-    {
-      label: 'Navigation Two',
-      key: 'app',
+    { label: 'Все заметки', key: 'all' },
+    { label: 'Заметки вне папок', key: 'no' },
+  ].concat(
+    data?.map((folder: IFolder) => ({
+      label: <>{folder.title}</>,
+      key: `${folder.id}`,
+    }))
+  );
 
-      disabled: true,
-    },
-    {
-      label: 'Navigation Three - Submenu',
-      key: 'SubMenu',
-    },
-  ];
+  const chooseFolder: MenuProps['onClick'] = (e) => {
+    setFolder(e.key);
+    console.log(folder);
+  };
 
   return (
     <Layout style={{ height: '86vh', padding: 25 }}>
-      <Sider
-        //! Пока что тема светлая, возможно буду юзать mobx для темы
-        theme="light"
-        width={250}
-      >
+      <Sider theme="light" width={250}>
         <NewNoteFolder />
-        {/* <Menu
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          items={items}
-        /> */}
         <Menu
           mode="inline"
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
           items={items}
+          style={{ height: '500px', overflow: 'auto' }}
+          onClick={chooseFolder}
         />
       </Sider>
 

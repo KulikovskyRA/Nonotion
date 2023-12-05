@@ -18,7 +18,8 @@ module.exports = folderRouter
         where: { userId: req.session.user.id },
         order: [['id', 'DESC']],
       });
-      res.json(allMyFolders);
+
+      res.status(200).json(allMyFolders);
     } catch (error) {
       res.sendStatus(400);
     }
@@ -40,6 +41,7 @@ module.exports = folderRouter
           userId: req?.session?.user?.id,
           isPublic: false,
         });
+        res.sendStatus(200);
       } catch (err) {
         res.status(400).json({ type: 'Что-то пошло не так' });
       }
