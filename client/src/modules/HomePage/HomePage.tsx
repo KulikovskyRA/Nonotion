@@ -5,8 +5,6 @@ const HomePage = () => {
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
-  console.log('---> HomePage - рендеринг');
-
   return (
     <>
       <h1>Vite + React</h1>

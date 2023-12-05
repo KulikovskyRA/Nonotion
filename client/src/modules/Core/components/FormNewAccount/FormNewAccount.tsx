@@ -8,8 +8,6 @@ import { useNewAccMutation } from '../../../../redux/services/authService';
 import { useState } from 'react';
 
 const FormNewAccount = ({ accountModalHandler }: IAccountModalHandlerProps) => {
-  console.log('---> FormNewAccount');
-
   const [errorAlert, setErrorAlert] = useState({
     status: false,
     errorInfo: '',

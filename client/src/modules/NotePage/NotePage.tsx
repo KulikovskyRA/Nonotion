@@ -1,13 +1,11 @@
-import { useParams } from 'react-router-dom';
 import { Layout, Menu, MenuProps } from 'antd';
 import NewNoteFolder from './components/NewNoteFolder/NewNoteFolder';
+import { folderAPI } from '../../redux/services/folderNoteService';
 
 const { Sider, Content } = Layout;
 
 const NotePage = () => {
-  const { id } = useParams();
-
-  console.log('---> ProfilePage - рендеринг', id);
+  const { data } = folderAPI.useAllFoldersQuery;
 
   const items: MenuProps['items'] = [
     {
@@ -34,12 +32,12 @@ const NotePage = () => {
         width={250}
       >
         <NewNoteFolder />
-        <Menu
+        {/* <Menu
           mode="inline"
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}
           items={items}
-        />
+        /> */}
         <Menu
           mode="inline"
           defaultSelectedKeys={['1']}

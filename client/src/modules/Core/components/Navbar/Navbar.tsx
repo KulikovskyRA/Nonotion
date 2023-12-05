@@ -31,8 +31,6 @@ const Navbar = ({ darkMode }: { darkMode: boolean }) => {
     // error, isLoading
   } = authAPI.useCheckAuthQuery();
 
-  console.log('---> Navbar - рендеринг');
-
   //! мутации
 
   const [

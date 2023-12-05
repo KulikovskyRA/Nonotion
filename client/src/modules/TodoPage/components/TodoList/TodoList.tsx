@@ -29,7 +29,6 @@ const TodoList = ({ todos }: ITodosProps) => {
 
   function changeHandler(event: ChangeEvent<HTMLInputElement>) {
     setModal((prev) => ({ ...prev, inner: event.target.value }));
-    console.log(modal);
   }
 
   const updateTodoInnerHandler = ({ id, inner }: IChangeTodo) => {

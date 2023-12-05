@@ -91,7 +91,7 @@ describe('Проверка Navbar', () => {
 
   //     const authNone = screen.queryByTestId('authNone');
   //     const authYes = screen.queryByTestId('authYes');
-  //     // console.log(authNone, authYes);
+  //
   //     expect(authNone).toBeInTheDocument();
   //     expect(authYes).not.toBeInTheDocument();
   //   });

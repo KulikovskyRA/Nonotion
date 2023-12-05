@@ -10,8 +10,6 @@ import { useLoginMutation } from '../../../../redux/services/authService';
 import { useState } from 'react';
 
 const FormLogin = ({ accountModalHandler }: IAccountModalHandlerProps) => {
-  console.log('---> FormLogin');
-
   const [errorAlert, setErrorAlert] = useState({
     status: false,
     errorInfo: '',
