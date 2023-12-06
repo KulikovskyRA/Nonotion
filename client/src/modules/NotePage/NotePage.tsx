@@ -3,21 +3,28 @@ import NewNoteFolder from './components/NewNoteFolder/NewNoteFolder';
 import { folderAPI } from '../../redux/services/folderNoteService';
 import { IFolder } from '../../types/types';
 import { useState } from 'react';
+import {
+  BookOutlined,
+  BorderOutlined,
+  SnippetsOutlined,
+} from '@ant-design/icons';
+import FolderContent from './components/FolderContent/FolderContent';
 
 const { Sider, Content } = Layout;
 
 const NotePage = () => {
   const { data } = folderAPI.useAllFoldersQuery('');
 
-  const [folder, setFolder] = useState('');
+  const [folder, setFolder] = useState('all');
 
   const items: MenuProps['items'] = [
-    { label: 'Все заметки', key: 'all' },
-    { label: 'Заметки вне папок', key: 'no' },
+    { label: 'Все заметки', key: 'all', icon: <SnippetsOutlined /> },
+    { label: 'Заметки вне папок', key: 'no', icon: <BorderOutlined /> },
   ].concat(
     data?.map((folder: IFolder) => ({
-      label: <>{folder.title}</>,
+      label: <div>{folder.title}</div>,
       key: `${folder.id}`,
+      icon: <BookOutlined />,
     }))
   );
 
@@ -37,7 +44,9 @@ const NotePage = () => {
         />
       </Sider>
 
-      <Content style={{ margin: '0 16px' }}></Content>
+      <Content>
+        <FolderContent articleProps={folder} />
+      </Content>
     </Layout>
   );
 };

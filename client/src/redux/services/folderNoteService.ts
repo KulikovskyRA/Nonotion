@@ -22,7 +22,16 @@ export const folderAPI = createApi({
       }),
       invalidatesTags: ['FolderTag'],
     }),
+
+    articlesOfFolder: builder.query({
+      query: (folderId) => ({ url: `folder/${folderId}/articles` }),
+      providesTags: ['ArticleTag'],
+    }),
   }),
 });
 
-export const { useAllFoldersQuery, useNewFolderMutation } = folderAPI;
+export const {
+  useAllFoldersQuery,
+  useNewFolderMutation,
+  useArticlesOfFolderQuery,
+} = folderAPI;

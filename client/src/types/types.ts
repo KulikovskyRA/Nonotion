@@ -50,3 +50,14 @@ export interface IFolder {
   updatedAt: string;
   createdAt: string;
 }
+
+export interface IArticle {
+  id: number;
+  title: string;
+  textarea: string;
+  userId: number;
+  folder: number;
+  isPublic: boolean;
+  updatedAt: string;
+  createdAt: string;
+}

@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 
-const { Folder } = require('../../db/models');
+const { Folder, Article } = require('../../db/models');
 
 const folderRouter = new Router();
 
@@ -9,9 +9,7 @@ module.exports = folderRouter
   .get('/all', async (req, res) => {
     try {
       if (!req?.session?.user?.id) {
-        res
-          .status(400)
-          .json({ type: 'Проблема авторизации при создании todo' });
+        res.status(400).json({ type: 'Проблема авторизации' });
       }
 
       const allMyFolders = await Folder.findAll({
@@ -45,5 +43,39 @@ module.exports = folderRouter
       } catch (err) {
         res.status(400).json({ type: 'Что-то пошло не так' });
       }
+    }
+  })
+
+  .get('/:id/articles', async (req, res) => {
+    const folderId = req.params.id;
+    console.log(folderId);
+
+    try {
+      if (!req?.session?.user?.id) {
+        res.status(400).json({ type: 'Проблема авторизации ' });
+      }
+
+      if (folderId === 'all') {
+        const myArticles = await Article.findAll({
+          where: { userId: req.session.user.id },
+          order: [['id', 'ASC']],
+        });
+        res.status(200).json(myArticles);
+      } else if (folderId === 'no') {
+        const myArticles = await Article.findAll({
+          where: { userId: req.session.user.id, folderId: null },
+          order: [['id', 'ASC']],
+        });
+        res.status(200).json(myArticles);
+      } else {
+        const myArticles = await Article.findAll({
+          where: { userId: req.session.user.id, folderId: Number(folderId) },
+          order: [['id', 'ASC']],
+        });
+
+        res.status(200).json(myArticles);
+      }
+    } catch (error) {
+      res.status(400).json(error);
     }
   });
